@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="zoneLayout" default="all" basedir=".">
+<project name="zonelayout" default="all" basedir=".">
     <property file="localBuild.properties"/>
 
     <property name="proj.java.home" value="C:\Program Files\Java\j2re1.4.2_10"/>
@@ -26,7 +26,7 @@
     <property name="classes.applet" value="${work}/classes-applet"/>
     <property name="jars" value="${work}/jars"/>
     <property name="conf" value="conf"/>
-    <property name="zonelayout.release" value="zoneLayout-1.0"/>
+    <property name="zonelayout.release" value="zonelayout-1.0"/>
     <property name="zonelayout.jar" value="${jars}/${zonelayout.release}.jar"/>
     <property name="applet.jar" value="${jars}/zoneLayoutDemo.jar"/>
     <property name="zonelayout.zip" value="${work}/${zonelayout.release}.zip"/>
