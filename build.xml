@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="zoneLayout" default="all" basedir=".">
+    <property file="localBuild.properties"/>
+
+    <property name="proj.java.home" value="C:\Program Files\Java\j2re1.4.2_10"/>
+    <property name="proj.jdk.home" value="C:\Program Files\Java\j2sdk1.4.2_10"/>
+    <property name="proj.java.classes.jar" value="${proj.java.home}/lib/rt.jar"/>
+    <property name="proj.javac" value="${proj.jdk.home}/bin/javac.exe"/>
+
+    <property name="src" value="src"/>
+    <property name="examples" value="examples"/>
+    <property name="work" value="work"/>
+    <property name="website" value="website"/>
+    <property name="docs" value="docs"/>
+    <property name="src.header" value="${docs}/sourceHeader.txt"/>
+    <property name="work.zonelayout.docs" value="${work}/zonelayout-docs"/>
+    <property name="zonelayout.manual" value="${docs}/manual"/>
+    <property name="work.zonelayout.javadoc" value="${work.zonelayout.docs}/javadoc"/>
+    <property name="work.website" value="${work}/website"/>
+    <property name="work.website.test" value="${work}/website-test"/>
+    <property name="work.zonelayout" value="${work}/zonelayout"/>
+    <property name="work.src" value="${work}/src"/>
+    <property name="classes.tests" value="${work}/classes-tests"/>
+    <property name="classes" value="${work}/classes"/>
+    <property name="classes.applet" value="${work}/classes-applet"/>
+    <property name="jars" value="${work}/jars"/>
+    <property name="conf" value="conf"/>
+    <property name="zonelayout.release" value="zoneLayout-1.0"/>
+    <property name="zonelayout.jar" value="${jars}/${zonelayout.release}.jar"/>
+    <property name="applet.jar" value="${jars}/zoneLayoutDemo.jar"/>
+    <property name="zonelayout.zip" value="${work}/${zonelayout.release}.zip"/>
+
+    <path id="classpath-build">
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="classpath-tests-build">
+        <pathelement path="${classes.tests}"/>
+        <pathelement path="${zonelayout.jar}"/>
+    </path>
+
+    <target name="all" depends="build">
+    </target>
+
+    <target name="build" depends="clean, website, zonelayout-jar, zonelayout-zip"/>
+
+    <target name="test" depends="build,compile-tests">
+        <junit fork="yes"
+               haltonerror="yes"
+               printsummary="yes">
+            <classpath>
+                <pathelement location="${classes.tests}"/>
+                <pathelement path="${zonelayout.jar}"/>
+            </classpath>
+            <formatter usefile="false" type="plain"/>
+            <test name="com.atticlabs.zonelayout.swing.ZoneLayoutAPITest"/>
+        </junit>
+    </target>
+
+    <target name="clean">
+        <delete dir="${work}"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${jars}"/>
+    </target>
+
+    <target name="zonelayout-javadoc" depends="init">
+        <javadoc sourcepath="${src}"
+                 packagenames="com.atticlabs.zonelayout.swing.*"
+                 destdir="${work.zonelayout.javadoc}"
+                 public="true"
+                 bottom="Copyright &amp;copy; 2006 Attic Labs LLC"/>
+    </target>
+
+    <target name="zonelayout-docs" depends="init, zonelayout-javadoc">
+        <property name="doc.html.header" value="${docs}/header.html"/>
+        <property name="doc.html.footer" value="${docs}/footer.html"/>
+        <copy todir="${work.zonelayout.docs}/manual/images">
+            <fileset dir="${zonelayout.manual}/images"/>
+        </copy>
+        <copy todir="${work.zonelayout.docs}" file="${docs}/cheatsheet.pdf"/>
+        <copy todir="${work.zonelayout.docs}" file="${docs}/README.txt"/>
+        <copy todir="${work.zonelayout.docs}" file="${website}/style.css"/>
+        <concat destfile="${work.zonelayout.docs}/manual/zoneLayoutManual.html">
+            <fileset file="${docs}/header.html"/>
+            <fileset file="${zonelayout.manual}/manualContent.html"/>
+            <fileset file="${docs}/footer.html"/>
+            <filterchain>
+                <replacetokens>
+                    <token key="TITLE" value="ZoneLayout Manual"/>
+                    <token key="STYLESHEET_LOCATION" value="../style.css"/>
+                </replacetokens>
+            </filterchain>
+        </concat>
+        <concat destfile="${work.zonelayout.docs}/license.html">
+            <fileset file="${docs}/header.html"/>
+            <fileset file="${docs}/licenseContent.html"/>
+            <fileset file="${docs}/footer.html"/>
+            <filterchain>
+                <replacetokens>
+                    <token key="TITLE" value="Attic Labs LLC License Agreement"/>
+                    <token key="STYLESHEET_LOCATION" value="style.css"/>
+                </replacetokens>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="website" depends="init, applet">
+        <loadfile srcfile="${zonelayout.manual}/manualContent.html" property="manual.content"/>
+        <loadfile srcfile="${docs}/licenseContent.html" property="license.content"/>
+        <copy todir="${work.website}">
+            <fileset dir="${website}"/>
+            <filterset>
+                <filter token="MANUAL_CONTENT" value="${manual.content}"/>
+                <filter token="LICENSE_CONTENT" value="${license.content}"/>
+            </filterset>
+            <filterset>
+                <filter token="LOGS_DIRECTORY" value="/users/home/bnahas/logs"/>
+                <filter token="DATA_FILES_DIRECTORY" value="/users/home/bnahas/data"/>
+                <filter token="DOWNLOADABLE_FILES_DIRECTORY" value="/users/home/bnahas/downloads"/>
+                <filter token="PAYPAL_ACTION_URL" value="https://www.paypal.com/cgi-bin/webscr"/>
+                <filter token="PAYPAL_RETURN_URL" value="http://www.zonelayout.com"/>
+            </filterset>
+        </copy>
+        <copy todir="${work.website.test}">
+            <fileset dir="${work.website}"/>
+        </copy>
+        <copy todir="${work.website.test}" overwrite="yes">
+            <fileset dir="${website}">
+                <include name="**/al_settings.php"/>
+                <include name="**/config.inc.php"/>
+            </fileset>
+            <filterset>
+                <filter token="LOGS_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles\logs"/>
+                <filter token="DATA_FILES_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles"/>
+                <filter token="DOWNLOADABLE_FILES_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles"/>
+                <filter token="PAYPAL_ACTION_URL" value="https://www.sandbox.paypal.com/cgi-bin/webscr"/>
+                <filter token="PAYPAL_RETURN_URL" value="http://www.zonelayout.com"/>
+            </filterset>
+        </copy>
+        <copy todir="${work.website}/images" overwrite="yes">
+            <fileset dir="${zonelayout.manual}/images"/>
+        </copy>
+        <copy todir="${work.website.test}/images" overwrite="yes">
+            <fileset dir="${zonelayout.manual}/images"/>
+        </copy>
+        <copy todir="${work.website}/images" overwrite="yes">
+            <fileset dir="${website}/images"/>
+        </copy>
+        <copy todir="${work.website.test}/images" overwrite="yes">
+            <fileset dir="${website}/images"/>
+        </copy>
+        <copy todir="${work.website}">
+            <fileset file="${applet.jar}"/>
+        </copy>
+        <copy todir="${work.website.test}">
+            <fileset file="${applet.jar}"/>
+        </copy>
+        <!-- /Program Files/Apache Group/Apache2/protectedFiles/logs -->
+        <!-- /Program Files/Apache Group/Apache2/protectedFiles -->
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes}"/>
+        <javac
+            executable="${proj.javac}"
+            fork="yes"
+            source="1.3"
+            srcdir="${src}"
+            destdir="${classes}"
+            classpathref="classpath-build"
+            optimize="yes"/>
+    </target>
+
+    <target name="compile-tests" depends="init">
+        <mkdir dir="${classes.tests}"/>
+        <javac
+            executable="${proj.javac}"
+            fork="yes"
+            source="1.3"
+            srcdir="test"
+            destdir="${classes.tests}"
+            classpathref="classpath-tests-build"
+            debug="true" />
+    </target>
+
+    <target name="zonelayout-src" depends="init">
+        <copy todir="${work.src}">
+            <fileset dir="${src}"/>
+            <filterchain>
+                <concatfilter prepend="${src.header}"/>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="zonelayout-jar" depends="init, compile">
+        <jar destfile="${zonelayout.jar}" basedir="${classes}">
+        </jar>
+    </target>
+
+    <target name="zonelayout-zip" depends="zonelayout-jar, zonelayout-docs, zonelayout-src">
+        <zip destfile="${zonelayout.zip}">
+            <zipfileset dir="${work.src}" prefix="${zonelayout.release}/src"/>
+            <zipfileset file="${zonelayout.jar}" prefix="${zonelayout.release}"/>
+            <zipfileset dir="${work.zonelayout.docs}" prefix="${zonelayout.release}"/>
+        </zip>
+    </target>
+
+    <target name="applet" depends="zonelayout-jar">
+        <mkdir dir="${classes.applet}"/>
+        <copy todir="${classes.applet}">
+            <fileset dir="${classes}"/>
+        </copy>
+        <javac
+            executable="${proj.javac}"
+            fork="yes"
+            source="1.3"
+            srcdir="${examples}"
+            sourcepath=""
+            destdir="${classes.applet}"
+            classpathref="classpath-build"
+            optimize="yes">
+            <include name="**/DemoApplet.java"/>
+        </javac>
+        <jar jarfile="${applet.jar}">
+            <fileset dir="${classes.applet}"/>
+        </jar>
+    </target>
+
+</project>

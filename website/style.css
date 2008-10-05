@@ -1,0 +1,164 @@
+
+body {
+	font-family: Georgia, 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-size: 100%;
+	background: #fff;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#header {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#content {
+	text-align: left;
+	margin: 20px auto;
+	padding: 0px;
+	width: 700px;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 {
+	margin: 0;
+}
+
+h2 {
+	margin: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	font-size: 180%;
+}
+
+h3 {
+	padding: 0px;
+	margin: 0px;
+}
+
+h4 {
+	font-size: 120%;
+}
+
+.center {
+	text-align: center
+}
+
+a img {
+	border: none;
+}
+
+#footer {
+	text-align: center;
+	font-size: .8em;
+	color: #aaaaaa;
+	margin-top: 100px;
+}
+
+#footer a {
+	color: #aaaaaa;
+}
+
+#menubar {
+	width: 700px;
+	margin: 20px auto;
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 0;
+	line-height: 18px;
+	text-align: center;
+    border-bottom: 1px solid #aaaaaa;
+    font-weight: bold;
+}
+
+#menubar ul {
+	text-align: center;
+	margin: 0;
+	padding: 0; 
+	list-style-type: none;
+	list-style-image: none;
+}
+
+#menubar li {
+	display: inline;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#menubar li a {
+	color: #000;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+.important {
+	font-weight: bold
+}
+
+.code {
+	background-color: #f0f0f0;
+	border: 1px dashed #3c78b5;
+	padding: 0px 10px 10px 10px;
+	margin: 10px;
+	font-family: Courier;
+	font-size: smaller;
+	white-space: pre;
+}
+
+.subtleNote {
+    color: #999999;
+    padding: 0px 10px 10px 10px;
+	margin: 10px;
+	font-size: smaller;
+}
+
+.key {
+	background-color: #fff29a;
+	border: 1px solid #3c78b5;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+}
+
+.new {
+	background-color: #fff29a;
+    text-align: center;
+    font-size: 120%;
+    border: 1px solid #3c78b5;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+}
+
+.errors {
+	background-color: #ffa5ac;
+	border: 1px solid #3c78b5;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+}
+
+.simpleTable {
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.simpleTable td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
