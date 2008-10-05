@@ -129,19 +129,6 @@
         <copy todir="${work.website.test}">
             <fileset dir="${work.website}"/>
         </copy>
-        <copy todir="${work.website.test}" overwrite="yes">
-            <fileset dir="${website}">
-                <include name="**/al_settings.php"/>
-                <include name="**/config.inc.php"/>
-            </fileset>
-            <filterset>
-                <filter token="LOGS_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles\logs"/>
-                <filter token="DATA_FILES_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles"/>
-                <filter token="DOWNLOADABLE_FILES_DIRECTORY" value="\Program Files\Apache Group\Apache2\protectedFiles"/>
-                <filter token="PAYPAL_ACTION_URL" value="https://www.sandbox.paypal.com/cgi-bin/webscr"/>
-                <filter token="PAYPAL_RETURN_URL" value="http://www.zonelayout.com"/>
-            </filterset>
-        </copy>
         <copy todir="${work.website}/images" overwrite="yes">
             <fileset dir="${zonelayout.manual}/images"/>
         </copy>

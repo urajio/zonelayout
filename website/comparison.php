@@ -1,7 +1,5 @@
 <?php
 
-include_once('includes/al_functions.php');
-
 function get_page_title() {
     return "ZoneLayout.com Comparison";
 }
