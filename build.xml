@@ -26,6 +26,8 @@
     <property name="applet.jar" value="${jars}/zoneLayoutDemo.jar"/>
     <property name="zonelayout.zip" value="${work}/${zonelayout.release}.zip"/>
 
+    <property name="build.sysclasspath" value="ignore"/>
+
     <path id="classpath-build">
         <fileset dir="lib">
             <include name="**/*.jar"/>
