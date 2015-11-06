@@ -3,11 +3,6 @@
 <project name="zonelayout" default="all" basedir=".">
     <property file="localBuild.properties"/>
 
-    <property name="proj.java.home" value="C:\Program Files\Java\j2re1.4.2_10"/>
-    <property name="proj.jdk.home" value="C:\Program Files\Java\j2sdk1.4.2_10"/>
-    <property name="proj.java.classes.jar" value="${proj.java.home}/lib/rt.jar"/>
-    <property name="proj.javac" value="${proj.jdk.home}/bin/javac.exe"/>
-
     <property name="src" value="src"/>
     <property name="examples" value="examples"/>
     <property name="work" value="work"/>
