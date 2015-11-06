@@ -3,22 +3,14 @@
 <project name="zonelayout" default="all" basedir=".">
     <property file="localBuild.properties"/>
 
-    <property name="proj.java.home" value="C:\Program Files\Java\j2re1.4.2_10"/>
-    <property name="proj.jdk.home" value="C:\Program Files\Java\j2sdk1.4.2_10"/>
-    <property name="proj.java.classes.jar" value="${proj.java.home}/lib/rt.jar"/>
-    <property name="proj.javac" value="${proj.jdk.home}/bin/javac.exe"/>
-
     <property name="src" value="src"/>
     <property name="examples" value="examples"/>
     <property name="work" value="work"/>
-    <property name="website" value="website"/>
     <property name="docs" value="docs"/>
     <property name="src.header" value="${docs}/sourceHeader.txt"/>
     <property name="work.zonelayout.docs" value="${work}/zonelayout-docs"/>
     <property name="zonelayout.manual" value="${docs}/manual"/>
     <property name="work.zonelayout.javadoc" value="${work.zonelayout.docs}/javadoc"/>
-    <property name="work.website" value="${work}/website"/>
-    <property name="work.website.test" value="${work}/website-test"/>
     <property name="work.zonelayout" value="${work}/zonelayout"/>
     <property name="work.src" value="${work}/src"/>
     <property name="classes.tests" value="${work}/classes-tests"/>
@@ -30,6 +22,8 @@
     <property name="zonelayout.jar" value="${jars}/${zonelayout.release}.jar"/>
     <property name="applet.jar" value="${jars}/zoneLayoutDemo.jar"/>
     <property name="zonelayout.zip" value="${work}/${zonelayout.release}.zip"/>
+
+    <property name="build.sysclasspath" value="ignore"/>
 
     <path id="classpath-build">
         <fileset dir="lib">
@@ -45,7 +39,7 @@
     <target name="all" depends="build">
     </target>
 
-    <target name="build" depends="clean, website, zonelayout-jar, zonelayout-zip"/>
+    <target name="build" depends="clean, zonelayout-jar, zonelayout-zip"/>
 
     <target name="test" depends="build,compile-tests">
         <junit fork="yes"
@@ -84,7 +78,7 @@
         </copy>
         <copy todir="${work.zonelayout.docs}" file="${docs}/cheatsheet.pdf"/>
         <copy todir="${work.zonelayout.docs}" file="${docs}/README.txt"/>
-        <copy todir="${work.zonelayout.docs}" file="${website}/style.css"/>
+        <copy todir="${work.zonelayout.docs}" file="${docs}/style.css"/>
         <concat destfile="${work.zonelayout.docs}/manual/zoneLayoutManual.html">
             <fileset file="${docs}/header.html"/>
             <fileset file="${zonelayout.manual}/manualContent.html"/>
@@ -107,48 +101,6 @@
                 </replacetokens>
             </filterchain>
         </concat>
-    </target>
-
-    <target name="website" depends="init, applet">
-        <loadfile srcfile="${zonelayout.manual}/manualContent.html" property="manual.content"/>
-        <loadfile srcfile="${docs}/licenseContent.html" property="license.content"/>
-        <copy todir="${work.website}">
-            <fileset dir="${website}"/>
-            <filterset>
-                <filter token="MANUAL_CONTENT" value="${manual.content}"/>
-                <filter token="LICENSE_CONTENT" value="${license.content}"/>
-            </filterset>
-            <filterset>
-                <filter token="LOGS_DIRECTORY" value="/users/home/bnahas/logs"/>
-                <filter token="DATA_FILES_DIRECTORY" value="/users/home/bnahas/data"/>
-                <filter token="DOWNLOADABLE_FILES_DIRECTORY" value="/users/home/bnahas/downloads"/>
-                <filter token="PAYPAL_ACTION_URL" value="https://www.paypal.com/cgi-bin/webscr"/>
-                <filter token="PAYPAL_RETURN_URL" value="http://www.zonelayout.com"/>
-            </filterset>
-        </copy>
-        <copy todir="${work.website.test}">
-            <fileset dir="${work.website}"/>
-        </copy>
-        <copy todir="${work.website}/images" overwrite="yes">
-            <fileset dir="${zonelayout.manual}/images"/>
-        </copy>
-        <copy todir="${work.website.test}/images" overwrite="yes">
-            <fileset dir="${zonelayout.manual}/images"/>
-        </copy>
-        <copy todir="${work.website}/images" overwrite="yes">
-            <fileset dir="${website}/images"/>
-        </copy>
-        <copy todir="${work.website.test}/images" overwrite="yes">
-            <fileset dir="${website}/images"/>
-        </copy>
-        <copy todir="${work.website}">
-            <fileset file="${applet.jar}"/>
-        </copy>
-        <copy todir="${work.website.test}">
-            <fileset file="${applet.jar}"/>
-        </copy>
-        <!-- /Program Files/Apache Group/Apache2/protectedFiles/logs -->
-        <!-- /Program Files/Apache Group/Apache2/protectedFiles -->
     </target>
 
     <target name="compile">
