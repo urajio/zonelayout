@@ -1,4 +1,4 @@
-ZoneLayout is a simple, intuitive, powerful, source-code-based system for designing Swing GUIs.
+#ZoneLayout is a simple, intuitive, powerful, source-code-based system for designing Swing GUIs.
 
 ZoneLayout saves you time by offering the following advantages over existing solutions:
   * **Easy to Learn:** Learn the fundamentals, grab the cheatsheet, and away you go
