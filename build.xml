@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="zonelayout" default="all" basedir=".">
-    <property file="localBuild.properties"/>
+    <property name="proj.javac" value="javac"/>
 
     <property name="src" value="src"/>
     <property name="examples" value="examples"/>
@@ -22,18 +22,14 @@
     <property name="zonelayout.jar" value="${jars}/${zonelayout.release}.jar"/>
     <property name="applet.jar" value="${jars}/zoneLayoutDemo.jar"/>
     <property name="zonelayout.zip" value="${work}/${zonelayout.release}.zip"/>
+    <property name="junit.jar" value="lib/build/junit.jar"/>
 
     <property name="build.sysclasspath" value="ignore"/>
-
-    <path id="classpath-build">
-        <fileset dir="lib">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
 
     <path id="classpath-tests-build">
         <pathelement path="${classes.tests}"/>
         <pathelement path="${zonelayout.jar}"/>
+        <pathelement path="${junit.jar}"/>
     </path>
 
     <target name="all" depends="build">
@@ -41,14 +37,11 @@
 
     <target name="build" depends="clean, zonelayout-jar, zonelayout-zip"/>
 
-    <target name="test" depends="build,compile-tests">
+    <target name="test" depends="build, compile-tests">
         <junit fork="yes"
                haltonerror="yes"
                printsummary="yes">
-            <classpath>
-                <pathelement location="${classes.tests}"/>
-                <pathelement path="${zonelayout.jar}"/>
-            </classpath>
+            <classpath refid="classpath-tests-build"/>
             <formatter usefile="false" type="plain"/>
             <test name="com.atticlabs.zonelayout.swing.ZoneLayoutAPITest"/>
         </junit>
@@ -111,7 +104,6 @@
             source="1.3"
             srcdir="${src}"
             destdir="${classes}"
-            classpathref="classpath-build"
             optimize="yes"/>
     </target>
 
@@ -161,7 +153,6 @@
             srcdir="${examples}"
             sourcepath=""
             destdir="${classes.applet}"
-            classpathref="classpath-build"
             optimize="yes">
             <include name="**/DemoApplet.java"/>
         </javac>
