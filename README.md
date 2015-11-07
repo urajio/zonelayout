@@ -14,3 +14,5 @@ ZoneLayout saves you time by offering the following advantages over existing sol
   * **Dynamic Layouts:** Create dynamic layouts easily by using Templates
   * **Spacers:** Preset components for spacing help you keep your spacing consistent
   * And more...
+
+[![Build Status](https://travis-ci.org/urajio/zonelayout.svg?branch=master)](https://travis-ci.org/urajio/zonelayout)
